@@ -1,0 +1,28 @@
+class Solution:
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        c, d1, d2 = {},{}, {}
+        res = []
+        rows = []
+        def dfs(row, col):
+            if col == n: return
+            if len(rows) == n:
+                res.append(rows[:])
+                return
+            diagonal1 = n - 1 - row + col
+            diagonal2 = row + col
+            if not c.get(col) and not d1.get(diagonal1) and not d2.get(diagonal2):
+                c[col] = True
+                d1[diagonal1] = True
+                d2[diagonal2] = True
+                rows.append('.' * col + 'Q' + '.' * (n - col - 1))
+                dfs(row + 1, 0)
+                c[col] = False
+                d1[diagonal1] = False
+                d2[diagonal2] = False
+                rows.pop()
+            dfs(row, col + 1)
+        
+        dfs(0,0)
+        return res
+            
+       
